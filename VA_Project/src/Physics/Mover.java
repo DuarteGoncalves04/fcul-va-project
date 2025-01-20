@@ -52,5 +52,7 @@ public abstract class Mover {
 	public PVector getVel() {
 		return vel;
 	}
+	
+
 
 }

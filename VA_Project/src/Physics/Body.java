@@ -23,5 +23,14 @@ public class Body extends Mover {
 		p.circle(pp[0], pp[1], 2 * r[0]);
 		p.popStyle();
 	}
+	
+	public void checkCollisionWall(Wall wall) {
+		if(pos.x + pos.y > wall.y - wall.h / 2){
+			pos.y = wall.y - wall.h/2 - radius;
+			this.vel = new PVector(0,0,0);
+		}
+	}
+	
+	
 
 }
