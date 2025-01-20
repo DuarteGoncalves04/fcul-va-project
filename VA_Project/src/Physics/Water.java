@@ -7,10 +7,11 @@ public class Water extends Fluid {
 
 	private float waterHeight;
 	private int color;
-	private static float density = 100.0f;
+	private float density;
 
-	public Water(float waterHeight, int color) {
+	public Water(float density, float waterHeight, int color) {
 		super(density); //Density of Water in Kg/m³
+		this.density = density;
 		this.waterHeight = waterHeight;
 		this.color = color;
 	}
