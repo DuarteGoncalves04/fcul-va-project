@@ -25,12 +25,10 @@ public class BuoyancyApp implements IProcessingApp {
 	private float mass = 80; // kg
 	private float radius = 0.5f; // m
 	private float radius_1 = 0.5f; // m
-	private float waterDensity = 100.0f; // kg/m^3
+	private float waterDensity = 900.0f; // kg/m^3
 	private float ballColor;
 	private float ballColor_1;
 	private float mass_1 = 100; // kg
-	private float waterDensity_1 = 100.0f; // kg/m^3
-
 
 	//GUI Components
 	private ControlP5 cp5;
@@ -44,10 +42,10 @@ public class BuoyancyApp implements IProcessingApp {
 	public void setup(PApplet p) {
 		plt = new SubPlot(window, viewport, p.width, p.height);
 		air = new Air();
-		water = new Water(waterDensity, 25.0f, p.color(0, 0, 255, 100));
+		water = new Water(waterDensity, 25.0f, p.color(0, 181, 204, 100));
 		ball = new Body(new PVector(dimX / 2, dimY - radius), new PVector(0, 0), mass, radius, p.color(255, 0, 0));
 		ball_1 = new Body(new PVector(dimX/2, 10), new PVector(0, 0), mass_1, radius_1, p.color(255, 0, 0));
-		wall = new Wall(dimX/2, dimY, 10, 400); // Wall to stop the ball from falling
+		wall = new Wall(dimX/2, 0, 5, 400); // Wall to stop the ball from falling
 		GUI(p);
 	}
 
@@ -69,13 +67,13 @@ public class BuoyancyApp implements IProcessingApp {
 				.setPosition(20,110)
 				.setSize(150,20)
 				.setRange(0, 2000)
-				.setValue(ballColor);
+				.setValue(waterDensity);
 		
 		colorSlider = cp5.addSlider("Ball 1 Color")
 				.setPosition(20,140)
 				.setSize(150,20)
 				.setRange(0, 250)
-				.setValue(waterDensity);
+				.setValue(ballColor);
 		
 			
 		
@@ -91,12 +89,6 @@ public class BuoyancyApp implements IProcessingApp {
 				.setSize(150,20)
 				.setRange(0, 1)
 				.setValue(radius_1);
-		
-		waterDensitySlider_1 = cp5_1.addSlider("Water Density")
-				.setPosition(900,110)
-				.setSize(150,20)
-				.setRange(0, 2000)
-				.setValue(waterDensity_1);
 		
 		colorSlider_1 = cp5.addSlider("Ball 2 Color")
 				.setPosition(900,140)
@@ -140,31 +132,36 @@ public class BuoyancyApp implements IProcessingApp {
 		p.popStyle();
 		// Draw GUI background section
 		
+		System.out.println("Water Density: "+waterDensity);
+		
 		
 		// Values for the dropped ball
 		mass = massSlider.getValue();
         waterDensity = waterDensitySlider.getValue();
 		radius = radiusSlider.getValue();
 		ballColor = p.color(colorSlider.getValue(),0,0);
+		water.setDensity(waterDensity);
 		
 		// Values for the submerged ball
 		mass_1 = massSlider_1.getValue();
-		waterDensity_1 = waterDensitySlider_1.getValue();
 		radius_1 = radiusSlider_1.getValue();
 
 	    water.display(p, plt);
-	    wall.display(p);
-
+	    wall.display(p,plt); //Displays the sand box (kinda ugly but wtv)
+	    
+	    
+	    //p.textAlign(p.CENTER, p.BOTTOM);
+	    
 	    if (ball != null) {
 	        // Apply gravity force
 	        PVector gravity = new PVector(0, mass * g);
 	        ball.applyForce(gravity);
-
+	        
 	        // Apply buoyant force if the ball is in water
 	        if (water.isInside(ball)) {
 	            PVector buoyancy = water.buoyantForce(ball, g);
 	            ball.applyForce(buoyancy);
-	            ball.checkCollisionWall(wall);
+	            ball.checkCollisionWall(wall); //Verifies if the ball is hitting the sand
 	        }
 
 	        PVector drag = water.isInside(ball) ? water.drag(ball) : air.drag(ball);
@@ -182,9 +179,10 @@ public class BuoyancyApp implements IProcessingApp {
 	        if (water.isInside(ball_1)) {
 	            PVector buoyancy = water.buoyantForce(ball_1, g);
 	            ball_1.applyForce(buoyancy);
+	            ball_1.checkCollisionWall(wall); //Verifies if the ball is hitting the sand
 	        }
 
-	        PVector drag = water.isInside(ball) ? water.drag(ball) : air.drag(ball);
+	        PVector drag = water.isInside(ball_1) ? water.drag(ball_1) : air.drag(ball_1);
 	        ball_1.applyForce(drag);
 	        ball_1.move(dt);
 	        ball_1.display(p, plt);

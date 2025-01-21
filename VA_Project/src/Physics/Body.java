@@ -24,11 +24,16 @@ public class Body extends Mover {
 		p.popStyle();
 	}
 	
+	/*
+	 * Verifies if the sand is being hit upon landing and allows for the ball to 
+	 * bounce back, dampening speed
+	 */
 	public void checkCollisionWall(Wall wall) {
-		if(pos.x + pos.y > wall.y - wall.h / 2){
-			pos.y = wall.y - wall.h/2 - radius;
-			this.vel = new PVector(0,0,0);
-		}
+		if (pos.y - radius <= wall.y) {
+	        //Adjust position to sit EXACTLY on the wall
+	        pos.y = wall.y + radius;
+	        vel.y *= -0.5; //Dampen -> velocity bounce
+	    }
 	}
 	
 	
