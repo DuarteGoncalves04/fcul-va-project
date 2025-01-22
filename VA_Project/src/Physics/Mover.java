@@ -53,4 +53,12 @@ public abstract class Mover {
 		return vel;
 	}
 
+	public void setMass(float mass) {
+		this.mass = mass;
+	}
+
+	public float getMass() {
+		return mass;
+	}
+
 }
