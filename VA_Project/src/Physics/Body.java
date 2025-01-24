@@ -35,7 +35,20 @@ public class Body extends Mover {
 	        vel.y *= -0.5; //Dampen -> velocity bounce
 	    }
 	}
-	
-	
 
+	public void setRadius(float radius) {
+		this.radius = radius;
+	}
+
+	public float getRadius() {
+		return radius;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
+	public float getColor() {
+		return color;
+	}
 }

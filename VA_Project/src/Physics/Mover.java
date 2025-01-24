@@ -55,4 +55,12 @@ public abstract class Mover {
 	
 
 
+	public void setMass(float mass) {
+		this.mass = mass;
+	}
+
+	public float getMass() {
+		return mass;
+	}
+
 }

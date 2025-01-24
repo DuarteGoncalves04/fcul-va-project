@@ -25,7 +25,7 @@ public class FallingBodyApp implements IProcessingApp {
 
 		plt = new SubPlot(window, viewport, p.width, p.height);
 		ball = new Body(new PVector(0, 12), new PVector(8, 6), mass, radius, p.color(255, 255, 0));
-		water = new Water(4, p.color(0, 255, 255));
+		//water = new Water(4, p.color(0, 255, 255));
 		air = new Air();
 		timer = 0.0f;
 	}
