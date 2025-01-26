@@ -22,8 +22,8 @@ public class BuoyancyApp implements IProcessingApp {
 
 	// PHYSICS VALUES
 	private static final float g = -9.8f; // m/(s^2)
-	private float mass = 100; // kg
-	private float mass2 = 100; // kg
+	private float mass = 471.2f; // kg
+	private float mass2 = 250; // kg
 	private float radius = 0.5f; // m
 	private float radius2 = 0.5f; // m
 	private int ballColor,ballColor2;
@@ -47,8 +47,8 @@ public class BuoyancyApp implements IProcessingApp {
 
 	private void initBalls(PApplet p) {
 		ballColor = p.color(255, 0, 0);
-		ballColor2 = p.color(0, 255, 0);
-		ball = new Body(new PVector(dimX - 10 / 2, dimY - radius), new PVector(0, 0), mass, radius, ballColor);
+		ballColor2 = p.color(0, 255, 0); //dimY-radius
+		ball = new Body(new PVector(dimX - 10 / 2, 30), new PVector(0, 0), mass, radius, ballColor);
 		ball2 = new Body(new PVector(dimX / 2, 10), new PVector(0, 0), mass2, radius2, ballColor2);
 
 		//Sprites
@@ -67,7 +67,7 @@ public class BuoyancyApp implements IProcessingApp {
 		massSlider = ball1Property.addSlider("Mass")
 				.setPosition(20, 60)
 				.setSize(150, 20)
-				.setRange(1, 200)
+				.setRange(1, 1000)
 				.setValue(mass);
 		radiusSlider = ball1Property.addSlider("Radius")
 				.setPosition(20, 85)
@@ -86,7 +86,7 @@ public class BuoyancyApp implements IProcessingApp {
 		massSlider2 = ball2Property.addSlider("Mass")
 				.setPosition(20, 200)
 				.setSize(150, 20)
-				.setRange(1, 200)
+				.setRange(1, 1000)
 				.setValue(mass2);
 		radiusSlider2 = ball2Property.addSlider("Radius")
 				.setPosition(20, 225)
@@ -116,22 +116,22 @@ public class BuoyancyApp implements IProcessingApp {
 						resetSimulation(p);
 					}
 				});
-		
+
 		simProperty.addButton("Metal Ball")
 				.setPosition(20, 390)
 				.setSize(70, 20)
 				.onClick(new CallbackListener() {
 					public void controlEvent(CallbackEvent theEvent) {
-						metalBall = new Body(new PVector(dimX - 10 / 2, dimY), new PVector(0, 0),10,0.3f,p.color(181,184,177));
+						metalBall = new Body(new PVector(dimX - 10 / 2, dimY), new PVector(0, 0),900,radius,p.color(181,184,177));
 					}
 				});
-		
+
 		simProperty.addButton("Cork Ball")
 				.setPosition(20, 415)
 				.setSize(70, 20)
 				.onClick(new CallbackListener() {
 					public void controlEvent(CallbackEvent theEvent) {
-						corkBall = new Body(new PVector(dimX / 2, dimY), new PVector(0, 0),0.2f,0.4f,p.color(156,111,62));
+						corkBall = new Body(new PVector(2f + dimX / 2, dimY), new PVector(0, 0),1f,0.1f,p.color(156,111,62));
 					}
 				});
 
@@ -140,7 +140,7 @@ public class BuoyancyApp implements IProcessingApp {
 				.setSize(70, 20)
 				.onClick(new CallbackListener() {
 					public void controlEvent(CallbackEvent theEvent) {
-						basketball = new Body(new PVector(dimX / 3, dimY), new PVector(0, 0),0.6f,0.24f,p.color(97,51,35));
+						basketball = new Body(new PVector(dimX / 3, dimY), new PVector(0, 0),30f,0.4f,p.color(97,51,35));
 					}
 				});
 
@@ -149,7 +149,7 @@ public class BuoyancyApp implements IProcessingApp {
 				.setSize(70, 20)
 				.onClick(new CallbackListener() {
 					public void controlEvent(CallbackEvent theEvent) {
-						rubberBall = new Body(new PVector(dimX / 4, dimY), new PVector(0, 0),1.2f,0.3f,p.color(58,54,59));
+						rubberBall = new Body(new PVector(dimX / 4, dimY), new PVector(0, 0),1.246f,0.1498f,p.color(58,54,59));
 					}
 				});
 	}
@@ -175,6 +175,8 @@ public class BuoyancyApp implements IProcessingApp {
 		System.out.println("Water Density: " + waterDensity);
 		wall.display(p, plt); // Displays the sand box (kinda ugly but wtv)
 
+
+
 		if (ball != null) {
 			ballProperties(p, dt, ball, mass, "Ball 1");
 			realTimeChanges(p, ball, mass, massSlider, radius, radiusSlider, ballColor, cp1);
@@ -187,16 +189,16 @@ public class BuoyancyApp implements IProcessingApp {
 
 		//Sprites
 		if(metalBall != null) {
-			ballProperties(p, dt, metalBall, 10, "Metal Ball");
+			ballProperties(p, dt, metalBall, 900, "Metal Ball");
 		}
 		if(corkBall != null) {
-			ballProperties(p, dt, corkBall, 0.2f, "Cork Ball");
+			ballProperties(p, dt, corkBall, 0.4f, "Cork Ball");
 		}
 		if(basketball != null) {
-			ballProperties(p, dt, basketball, 0.6f, "Basketball");
+			ballProperties(p, dt, basketball, 10f, "Basketball");
 		}
 		if(rubberBall != null) {
-			ballProperties(p, dt, rubberBall, 1.2f, "Rubber Ball");
+			ballProperties(p, dt, rubberBall, 1.246f, "Rubber Ball");
 		}
 	}
 
@@ -215,8 +217,10 @@ public class BuoyancyApp implements IProcessingApp {
 		PVector gravity = new PVector(0, ballmass * g);
 		ball.applyForce(gravity);
 
+
 		// Apply buoyant force if the ball is in water
 		if (water.isInside(ball)) {
+			System.out.println("Ball is inside water");
 			PVector buoyancy = water.buoyantForce(ball, g);
 			ball.applyForce(buoyancy);
 			ball.checkCollisionWall(wall); // Verifies if the ball is hitting the sand

@@ -25,15 +25,9 @@ public class Water extends Fluid {
 	}
 	
 	public PVector buoyantForce(Body b, float g) {
-		//F_b = - p + g * V
-		// p = Density of Fluid
-		// g = Gravity
-		// V = Volume of Fluid ???
-			 
-		float Fb = this.density * Math.abs(g);
-		
+		float volume = (4.0f / 3.0f) * PApplet.PI * PApplet.pow(b.radius, 3.0f);
+		float Fb = this.density * volume * Math.abs(g);
 		return new PVector(0,Fb) ;
-		
 	}
 	
 	/*public PVector buoyantForce(Body b, float g) {
