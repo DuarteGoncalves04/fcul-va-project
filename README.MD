@@ -1,4 +1,4 @@
-# Buoyancy Simulation - A Artificial Life Project
+# Buoyancy Simulation - An Artificial Life Project
 
 This repository contains our implementation of the **Buoyancy Simulation** using the JAVA [Processing](https://processing.org/) Framework with the aid of [ControlP5](https://www.sojamo.de/libraries/controlP5/) Library. The project models the behavior of objects in air and water, simulating forces such as gravity, buoyancy, and drag.
 
