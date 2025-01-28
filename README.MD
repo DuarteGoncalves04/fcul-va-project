@@ -18,12 +18,10 @@ This repository contains our implementation of the **Buoyancy Simulation** using
 ## Overview
 This project is a physics-based artificial life simulation that explores the dynamics of floating and sinking objects under buoyancy forces. It allows users to interact with virtual objects that have different physical properties, such as mass, radius, and density, affecting their movement in the simulated environment.
 
-The key features of the project include:
+Features of the project:
 
 - **Realistic Physics**: Objects behave according to Newtonian mechanics, reacting to gravity, water resistance, and buoyant forces.
 - **Interactive Controls**: A GUI enables real-time modification of object parameters.
-- **Agent-Based Simulation**: The system includes various agents representing different types of floating and sinking entities.
-- **Processing Framework**: Uses the Processing 4 library for visualization and physics simulation.
 
 ---
 
