@@ -130,7 +130,7 @@ Each object in the simulation has:
 
 ## Author and Contact
 
-- **Henrique Matos** - [hanrique.matos@gmail.com](mailto:hanrique.matos@gmail.com)
+- **Henrique Matos** - [henrique.matos@gmail.com](mailto:henrique.matos@gmail.com)
 - **Duarte Gonçalves** - [duarte.dapg@gmail.com](mailto:duarte.dapg@gmail.com)
 
 For any questions or suggestions, feel free to open an issue or reach out by email. Pull requests to improve or extend the simulation are also welcome!
